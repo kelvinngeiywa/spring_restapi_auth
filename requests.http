@@ -1,0 +1,32 @@
+### GET request to example server
+GET http://localhost:8080/subjects
+
+###
+GET http://localhost:8080/subjects/c783fb73-f8f5-4c70-8f2e-b4b2f6ee9614
+
+###
+
+POST http://localhost:8080/subjects
+Content-Type: application/json
+
+{
+  "subjectName": "Computer Studies",
+  "subjectCode": "CS101"
+}
+
+####teachers
+
+###
+GET http://localhost:8080/teachers
+
+###
+POST http://localhost:8080/teachers
+Content-Type: application/json
+
+{
+  "name": "Sheila",
+  "email": "sheila@gmail.com",
+  "phoneNumber": "0715539942",
+  "residence": "Kitale",
+  "dob": "2000-11-02"
+}
