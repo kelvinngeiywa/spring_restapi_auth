@@ -32,6 +32,7 @@ public class Subject {
         this.subjectName=subjectName;
         this.subjectCode=subjectCode;
 
+
     }
 
     public UUID getId(){
