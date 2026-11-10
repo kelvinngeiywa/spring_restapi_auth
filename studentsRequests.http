@@ -1,0 +1,37 @@
+### GET request to example server
+GET http://localhost:8080/students
+
+###
+GET http://localhost:8080/students/a24870ad-b8a8-4cef-a298-584fb46294a8
+
+###
+
+POST http://localhost:8080/students
+Content-Type: application/json
+
+{
+  "name": "Liam",
+  "grade": 6,
+  "stream": "Buffalo",
+  "regNumber": "2026/009/2BL",
+  "dob": "2018-08-15",
+  "residence": "Kitale",
+  "parentId": "e6f75f3f-c835-4a83-8e76-cce96c335b93"
+}
+
+###
+PUT http://localhost:8080/students/0460e26e-f98c-456b-a944-95d675cfb3fb
+Content-Type: application/json
+
+{
+  "name": "Liam",
+  "grade": 6,
+  "stream": "Buffalo",
+  "regNumber": "2026/009/2BL",
+  "dob": "2018-08-15",
+  "residence": "Kitale",
+  "parentId": "e6f75f3f-c835-4a83-8e76-cce96c335b93"
+}
+
+###
+DELETE http://localhost:8080/students/a24870ad-b8a8-4cef-a298-584fb46294a8

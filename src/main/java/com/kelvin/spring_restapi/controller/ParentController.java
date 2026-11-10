@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/parents")
@@ -36,6 +37,32 @@ public class ParentController {
         ResponseDto<List<ParentResponseDto>> responseDto=new ResponseDto<>(
                 HttpStatus.OK.value(), "",parents);
 
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDto<ParentResponseDto>> getParentById(@PathVariable UUID id){
+        ParentResponseDto parent= parentService.getParentById(id);
+        ResponseDto<ParentResponseDto> responseDto= new ResponseDto<>(HttpStatus.OK.value(), "Parent found",
+                parent);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseDto<ParentResponseDto>> updateParent(@PathVariable UUID id,@RequestBody AddParentDto parentDto){
+        ParentResponseDto updateParent= parentService.updateParent(id,parentDto);
+        ResponseDto<ParentResponseDto> responseDto= new ResponseDto<>(HttpStatus.OK.value(), "Parent updated!!",
+                updateParent);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseDto<String>> deleteParent(@PathVariable UUID id){
+        String deleteParent= parentService.deleteParent(id);
+        ResponseDto<String> responseDto=new ResponseDto<>(HttpStatus.OK.value(), "Parent deleted!!",
+                deleteParent);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 
     }

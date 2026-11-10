@@ -2,6 +2,7 @@ package com.kelvin.spring_restapi.entities;
 
 import com.kelvin.spring_restapi.entities.enums.GradeStreamEnum;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
@@ -16,6 +17,9 @@ public class Student {
     private UUID id;
     @Column(nullable = false)
     private String name;
+    @Column(unique = true,nullable = false)
+    @NotBlank(message = "Registration number is required!!")
+    private String regNumber;
     @Column(nullable = false)
     private int grade;
     @Column(nullable = false)
@@ -24,7 +28,7 @@ public class Student {
     private LocalDate dob;
     @NotNull(message="Student residence is required")
     private String residence;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "parent_id",referencedColumnName = "id",nullable = false)
     private Parent parent;
 
@@ -32,16 +36,16 @@ public class Student {
 
     }
 
-    public Student(UUID id,String name,int grade,
-                   GradeStreamEnum stream,LocalDate dob,String residence ){
+    public Student(UUID id,String name,String regNumber,int grade,
+                   GradeStreamEnum stream,LocalDate dob,String residence,Parent parent ){
         this.id=id;
         this.name=name;
+        this.regNumber=regNumber;
         this.grade=grade;
         this.stream=stream;
         this.dob=dob;
         this.residence=residence;
-
-
+        this.parent=parent;
     }
 
     public UUID getId(){
@@ -54,6 +58,14 @@ public class Student {
 
     public void setName(String name){
         this.name=name;
+    }
+
+    public String getRegNumber(){
+        return this.regNumber;
+    }
+
+    public void setRegNumber(String regNumber){
+        this.regNumber=regNumber;
     }
 
     public int getGrade(){
@@ -87,6 +99,15 @@ public class Student {
 
     public void setResidence(String residence){
         this.residence=residence;
+    }
+
+    public Parent getParent(){
+        return this.parent;
+    }
+
+    public void setParent(Parent parent){
+        this.parent=parent;
+
     }
 
 

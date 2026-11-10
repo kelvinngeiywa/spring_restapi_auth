@@ -70,6 +70,14 @@ public class ParentService {
         Parent parent= parentRepository.findById(id).orElseThrow(()->
                 new EntityNotFoundException("Parent not found!!"));
 
+        if(!parent.getEmail().equals(parentDto.email()) && parentRepository.existsByEmail(parentDto.email())){
+            throw new DuplicateEntryException("Email exists");
+        }
+        if(!parent.getPhoneNumber().equals(parentDto.phoneNumber()) &&
+                parentRepository.existsByPhoneNumber(parentDto.phoneNumber())){
+            throw new DuplicateEntryException("Phone number exists");
+        }
+
         parent.setName(parentDto.name());
         parent.setEmail(parentDto.email());
         parent.setPhoneNumber(parentDto.phoneNumber());

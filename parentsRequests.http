@@ -2,6 +2,9 @@
 GET http://localhost:8080/parents
 ###
 
+GET http://localhost:8080/parents/2ca8990a-554f-497a-b3d4-83b040c2d067
+###
+
 POST http://localhost:8080/parents
 Content-Type: application/json
 
@@ -11,3 +14,18 @@ Content-Type: application/json
   "phoneNumber": "+254700112058",
   "residence": "Kitale"
 }
+
+###
+
+PUT http://localhost:8080/parents/08afac95-21ac-440c-a13b-7a909f75ef37
+Content-Type: application/json
+
+{
+  "name": "Harry",
+  "email": "harry4@gmail.com",
+  "phoneNumber": "+254700112059",
+  "residence": "Kitale"
+}
+
+###
+DELETE http://localhost:8080/parents/bc1d6118-2c33-4c58-8b12-c83428cc9ba7
