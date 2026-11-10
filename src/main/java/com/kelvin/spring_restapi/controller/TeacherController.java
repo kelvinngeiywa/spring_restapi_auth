@@ -24,9 +24,9 @@ public class TeacherController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDto<Teacher>> addNewTeacher(@Valid @RequestBody AddTeacherDto addTeacherDto){
-        Teacher newTeacher= teacherService.createTeacher(addTeacherDto);
-        ResponseDto<Teacher> responseDto=new ResponseDto<>(HttpStatus.CREATED.value(),"Teacher created successfully!!",newTeacher);
+    public ResponseEntity<ResponseDto<TeacherResponseDto>> addNewTeacher(@Valid @RequestBody AddTeacherDto addTeacherDto){
+        TeacherResponseDto newTeacher= teacherService.createTeacher(addTeacherDto);
+        ResponseDto<TeacherResponseDto> responseDto=new ResponseDto<>(HttpStatus.CREATED.value(),"Teacher created successfully!!",newTeacher);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 

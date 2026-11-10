@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.UUID;
 
@@ -16,9 +17,12 @@ public class Parent {
     @NotNull(message="Name is required")
     private String name;
     @NotNull(message="Phone number is required")
+    @Pattern(regexp = "^(\\+254|0)[17]\\d{8}$",
+            message = "Invalid international phone number format")
     private String phoneNumber;
     @NotBlank(message="Email is required")
-    @Email(message = "Please provide a valid email address")
+    @Email(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+            message = "Please enter valid email address")
     private String email;
     @NotBlank(message = "Residence is required")
     private String residence;

@@ -1,0 +1,20 @@
+### GET request to example server
+GET http://localhost:8080/subjects
+
+###
+GET http://localhost:8080/subjects/c783fb73-f8f5-4c70-8f2e-b4b2f6ee9614
+
+###
+
+POST http://localhost:8080/subjects
+Content-Type: application/json
+
+{
+  "subjectName": "Kiswahili",
+  "subjectCode": "KSW101"
+}
+
+###
+
+
+DELETE http://localhost:8080/teachers/3b2a246b-5fe3-4f85-bdbc-5c83cb45f91d/subjects/08f818a2-dbde-4ce8-bff

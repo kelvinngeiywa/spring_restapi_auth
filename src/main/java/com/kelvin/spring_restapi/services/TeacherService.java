@@ -30,7 +30,7 @@ public class TeacherService {
         this.subjectRepository = subjectRepository;
     }
 
-    public Teacher createTeacher(AddTeacherDto teacherDto){
+    public TeacherResponseDto createTeacher(AddTeacherDto teacherDto){
         if(teacherRepository.existsByEmail(teacherDto.getEmail())){
             throw new DuplicateEntryException("Email exists");
 
@@ -49,7 +49,7 @@ public class TeacherService {
 
         teacherRepository.save(newTeacher);
 
-        return newTeacher;
+        return toTeacherResponse(newTeacher);
 
     }
 
@@ -82,6 +82,7 @@ public class TeacherService {
 
     }
 
+    @Transactional
     public TeacherResponseDto removeSubject(UUID teacherId,UUID subjectId){
         Teacher teacher= teacherRepository.findById(teacherId).orElseThrow(()-> new EntityNotFoundException("Teacher not found"));
 

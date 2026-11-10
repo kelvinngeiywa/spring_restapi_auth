@@ -1,0 +1,13 @@
+### GET request to example server
+GET http://localhost:8080/parents
+###
+
+POST http://localhost:8080/parents
+Content-Type: application/json
+
+{
+  "name": "Harry",
+  "email": "harry3@gmail.com",
+  "phoneNumber": "+254700112058",
+  "residence": "Kitale"
+}
