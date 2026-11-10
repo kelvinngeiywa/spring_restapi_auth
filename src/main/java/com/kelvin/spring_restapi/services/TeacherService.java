@@ -31,21 +31,21 @@ public class TeacherService {
     }
 
     public TeacherResponseDto createTeacher(AddTeacherDto teacherDto){
-        if(teacherRepository.existsByEmail(teacherDto.getEmail())){
+        if(teacherRepository.existsByEmail(teacherDto.email())){
             throw new DuplicateEntryException("Email exists");
 
         }
-        if(teacherRepository.existsByPhoneNumber(teacherDto.getPhoneNumber())){
+        if(teacherRepository.existsByPhoneNumber(teacherDto.phoneNumber())){
             throw new DuplicateEntryException("Phone number exists");
 
         }
 
         Teacher newTeacher= new Teacher();
-        newTeacher.setName(teacherDto.getName());
-        newTeacher.setEmail(teacherDto.getEmail());
-        newTeacher.setPhoneNumber(teacherDto.getPhoneNumber());
-        newTeacher.setResidence(teacherDto.getResidence());
-        newTeacher.setDob(teacherDto.getDob());
+        newTeacher.setName(teacherDto.name());
+        newTeacher.setEmail(teacherDto.email());
+        newTeacher.setPhoneNumber(teacherDto.phoneNumber());
+        newTeacher.setResidence(teacherDto.residence());
+        newTeacher.setDob(teacherDto.dob());
 
         teacherRepository.save(newTeacher);
 

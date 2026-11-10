@@ -3,6 +3,7 @@ package com.kelvin.spring_restapi.controller;
 import com.kelvin.spring_restapi.entities.Subject;
 import com.kelvin.spring_restapi.entities.dtos.AddSubjectDto;
 import com.kelvin.spring_restapi.entities.dtos.ResponseDto;
+import com.kelvin.spring_restapi.entities.dtos.SubjectResponseDto;
 import com.kelvin.spring_restapi.services.SubjectService;
 import jakarta.validation.Valid;
 import org.hibernate.mapping.Map;
@@ -25,24 +26,24 @@ public class SubjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDto<Subject>> addSubject(@Valid @RequestBody AddSubjectDto addSubjectDto){
-        Subject newSubject= subjectService.AddSubject(addSubjectDto);
-        ResponseDto<Subject> responseDto=new ResponseDto<>(HttpStatus.CREATED.value(),"Subject created successfully!!",newSubject);
+    public ResponseEntity<ResponseDto<SubjectResponseDto>> addSubject(@Valid @RequestBody AddSubjectDto addSubjectDto){
+        SubjectResponseDto newSubject= subjectService.AddSubject(addSubjectDto);
+        ResponseDto<SubjectResponseDto> responseDto=new ResponseDto<>(HttpStatus.CREATED.value(),"Subject created successfully!!",newSubject);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
 
     }
 
     @GetMapping
-    public ResponseEntity<ResponseDto<List<Subject>>> getAllSubjects(){
-        List<Subject> subjects= subjectService.getAllSubjects();
-        ResponseDto<List<Subject>> responseDto=new ResponseDto<>(HttpStatus.OK.value(),"Subjects found",subjects);
+    public ResponseEntity<ResponseDto<List<SubjectResponseDto>>> getAllSubjects(){
+        List<SubjectResponseDto> subjects= subjectService.getAllSubjects();
+        ResponseDto<List<SubjectResponseDto>> responseDto=new ResponseDto<>(HttpStatus.OK.value(),"Subjects found",subjects);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDto<Subject>> getSubjectById(@PathVariable UUID id){
-        Subject subject= subjectService.getSubjectById(id);
-        ResponseDto<Subject> responseDto=new ResponseDto<>(HttpStatus.OK.value(),"Subject found",subject);
+    public ResponseEntity<ResponseDto<SubjectResponseDto>> getSubjectById(@PathVariable UUID id){
+        SubjectResponseDto subject= subjectService.getSubjectById(id);
+        ResponseDto<SubjectResponseDto> responseDto=new ResponseDto<>(HttpStatus.OK.value(),"Subject found",subject);
         return ResponseEntity.status(HttpStatus.OK.value()).body(responseDto);
     }
 }
