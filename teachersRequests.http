@@ -11,11 +11,26 @@ Content-Type: application/json
 
 {
   "name": "Faith",
-  "email": "faith@gmail.com",
-  "phoneNumber": "0715539943",
+  "email": "faith4@gmail.com",
+  "phoneNumber": "0715539940",
   "residence": "Kitale",
   "dob": "1994-11-02"
 }
+
+###
+PUT http://localhost:8080/teachers/e4120111-b69b-4341-bb6f-12fd0bc5d946
+Content-Type: application/json
+
+{
+  "name": "Alex",
+  "email": "alex@gmail.com",
+  "phoneNumber": "0720567890",
+  "residence": "Kitale",
+  "dob": "2000-11-02"
+}
+
+###
+DELETE http://localhost:8080/teachers/e4120111-b69b-4341-bb6f-12fd0bc5d946
 
 ###
 

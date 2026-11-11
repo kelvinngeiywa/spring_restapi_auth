@@ -5,6 +5,7 @@ import com.kelvin.spring_restapi.entities.Subject;
 import com.kelvin.spring_restapi.entities.dtos.AddSubjectDto;
 import com.kelvin.spring_restapi.entities.dtos.SubjectResponseDto;
 import com.kelvin.spring_restapi.repository.SubjectRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -47,6 +48,29 @@ public class SubjectService {
 
     }
 
+    public SubjectResponseDto updateSubject(UUID id,AddSubjectDto subjectDto){
+        Subject subject= subjectRepository.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Subject not found!!"));
+
+        if(!subject.getSubjectName().equals(subjectDto.subjectName()) &&
+                subjectRepository.existsBySubjectName(subjectDto.subjectName())){
+            throw new DuplicateEntryException("Subject with name "+subjectDto.subjectName()+
+                    " exists");
+        }
+
+        if(!subject.getSubjectCode().equals(subjectDto.subjectCode()) &&
+                subjectRepository.existsBySubjectCode(subjectDto.subjectCode())){
+            throw new DuplicateEntryException("Subject with code "+subjectDto.subjectCode()+
+                    " exists");
+        }
+
+        subject.setSubjectName(subjectDto.subjectName());
+        subject.setSubjectCode(subjectDto.subjectCode());
+
+        subjectRepository.save(subject);
+        return toSubjectResponse(subject);
+    }
+
     public List<SubjectResponseDto> getAllSubjects(){
         return subjectRepository.findAll().stream().map(this::toSubjectResponse).toList();
 
@@ -58,6 +82,14 @@ public class SubjectService {
         ));
 
         return toSubjectResponse(subject);
+    }
+
+    public String deleteSubject(UUID id){
+        Subject subject= subjectRepository.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Subject not found!!"));
+
+        subjectRepository.delete(subject);
+        return "";
     }
 
     private SubjectResponseDto toSubjectResponse(Subject subject){

@@ -1,6 +1,7 @@
 package com.kelvin.spring_restapi.controller;
 
 import com.kelvin.spring_restapi.entities.dtos.AddParentDto;
+import com.kelvin.spring_restapi.entities.dtos.ApiResponseDto;
 import com.kelvin.spring_restapi.entities.dtos.ParentResponseDto;
 import com.kelvin.spring_restapi.entities.dtos.ResponseDto;
 import com.kelvin.spring_restapi.services.ParentService;
@@ -22,9 +23,9 @@ public class ParentController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDto<ParentResponseDto>> addParent(@Valid @RequestBody AddParentDto parentDto){
+    public ResponseEntity<ApiResponseDto<ParentResponseDto>> addParent(@Valid @RequestBody AddParentDto parentDto){
         ParentResponseDto newParent= parentService.addParent(parentDto);
-        ResponseDto<ParentResponseDto> responseDto= new ResponseDto<>(HttpStatus.OK.value(), "",
+        ApiResponseDto<ParentResponseDto> responseDto= new ApiResponseDto<>(HttpStatus.OK.value(), "",
                 newParent);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
@@ -32,9 +33,9 @@ public class ParentController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseDto<List<ParentResponseDto>>> getAllParents(){
+    public ResponseEntity<ApiResponseDto<List<ParentResponseDto>>> getAllParents(){
         List<ParentResponseDto> parents= parentService.getAllParents();
-        ResponseDto<List<ParentResponseDto>> responseDto=new ResponseDto<>(
+        ApiResponseDto<List<ParentResponseDto>> responseDto=new ApiResponseDto<>(
                 HttpStatus.OK.value(), "",parents);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
@@ -42,26 +43,26 @@ public class ParentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDto<ParentResponseDto>> getParentById(@PathVariable UUID id){
+    public ResponseEntity<ApiResponseDto<ParentResponseDto>> getParentById(@PathVariable UUID id){
         ParentResponseDto parent= parentService.getParentById(id);
-        ResponseDto<ParentResponseDto> responseDto= new ResponseDto<>(HttpStatus.OK.value(), "Parent found",
+        ApiResponseDto<ParentResponseDto> responseDto= new ApiResponseDto<>(HttpStatus.OK.value(), "Parent found",
                 parent);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDto<ParentResponseDto>> updateParent(@PathVariable UUID id,@RequestBody AddParentDto parentDto){
+    public ResponseEntity<ApiResponseDto<ParentResponseDto>> updateParent(@PathVariable UUID id,@RequestBody AddParentDto parentDto){
         ParentResponseDto updateParent= parentService.updateParent(id,parentDto);
-        ResponseDto<ParentResponseDto> responseDto= new ResponseDto<>(HttpStatus.OK.value(), "Parent updated!!",
+        ApiResponseDto<ParentResponseDto> responseDto= new ApiResponseDto<>(HttpStatus.OK.value(), "Parent updated!!",
                 updateParent);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseDto<String>> deleteParent(@PathVariable UUID id){
+    public ResponseEntity<ApiResponseDto<String>> deleteParent(@PathVariable UUID id){
         String deleteParent= parentService.deleteParent(id);
-        ResponseDto<String> responseDto=new ResponseDto<>(HttpStatus.OK.value(), "Parent deleted!!",
+        ApiResponseDto<String> responseDto=new ApiResponseDto<>(HttpStatus.OK.value(), "Parent deleted!!",
                 deleteParent);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 

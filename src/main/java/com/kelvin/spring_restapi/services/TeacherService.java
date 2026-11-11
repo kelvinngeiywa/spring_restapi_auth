@@ -53,6 +53,29 @@ public class TeacherService {
 
     }
 
+    public TeacherResponseDto updateTeacher(UUID id,AddTeacherDto teacherDto){
+        Teacher teacher= teacherRepository.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Teacher not found"));
+
+        if(!teacher.getEmail().equals(teacherDto.email()) && teacherRepository.existsByEmail(teacherDto.email())){
+            throw new DuplicateEntryException("Email exists");
+
+        }
+        if(!teacher.getPhoneNumber().equals(teacherDto.phoneNumber()) && teacherRepository.existsByPhoneNumber(teacherDto.phoneNumber())){
+            throw new DuplicateEntryException("Phone number exists");
+
+        }
+        teacher.setName(teacherDto.name());
+        teacher.setEmail(teacherDto.email());
+        teacher.setPhoneNumber(teacherDto.phoneNumber());
+        teacher.setResidence(teacherDto.residence());
+        teacher.setDob(teacherDto.dob());
+
+        teacherRepository.save(teacher);
+
+        return toTeacherResponse(teacher);
+    }
+
     public List<TeacherResponseDto> getAllTeachers(){
         List<TeacherResponseDto> teachers= teacherRepository.findAll().stream().map(this::toTeacherResponse).toList();
         return teachers;
@@ -62,6 +85,14 @@ public class TeacherService {
     public TeacherResponseDto getTeacherById(UUID id){
         Teacher teacher= teacherRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Teacher not found!!"));
         return toTeacherResponse(teacher);
+    }
+
+    public String deleteTeacher(UUID id){
+        Teacher teacher= teacherRepository.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Teacher not found"));
+
+        teacherRepository.delete(teacher);
+        return "";
     }
 
     @Transactional

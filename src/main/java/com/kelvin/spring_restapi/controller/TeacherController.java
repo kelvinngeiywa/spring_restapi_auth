@@ -1,10 +1,7 @@
 package com.kelvin.spring_restapi.controller;
 
 import com.kelvin.spring_restapi.entities.Teacher;
-import com.kelvin.spring_restapi.entities.dtos.AddTeacherDto;
-import com.kelvin.spring_restapi.entities.dtos.AssignSubjectDto;
-import com.kelvin.spring_restapi.entities.dtos.ResponseDto;
-import com.kelvin.spring_restapi.entities.dtos.TeacherResponseDto;
+import com.kelvin.spring_restapi.entities.dtos.*;
 import com.kelvin.spring_restapi.services.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,40 +21,59 @@ public class TeacherController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDto<TeacherResponseDto>> addNewTeacher(@Valid @RequestBody AddTeacherDto addTeacherDto){
+    public ResponseEntity<ApiResponseDto<TeacherResponseDto>> addNewTeacher(@Valid @RequestBody AddTeacherDto addTeacherDto){
         TeacherResponseDto newTeacher= teacherService.createTeacher(addTeacherDto);
-        ResponseDto<TeacherResponseDto> responseDto=new ResponseDto<>(HttpStatus.CREATED.value(),"Teacher created successfully!!",newTeacher);
+        ApiResponseDto<TeacherResponseDto> responseDto=new ApiResponseDto<>(HttpStatus.CREATED.value(),"Teacher created successfully!!",newTeacher);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     @PostMapping("/assign-subject/{teacherId}")
-    public ResponseEntity<ResponseDto<TeacherResponseDto>> assignSubject(@PathVariable UUID teacherId,
+    public ResponseEntity<ApiResponseDto<TeacherResponseDto>> assignSubject(@PathVariable UUID teacherId,
                                                               @Valid @RequestBody
                                                               AssignSubjectDto assignSubjectDto){
         TeacherResponseDto newSubjectAssigned= teacherService.assignSubjects(teacherId,assignSubjectDto.subjectIds());
-        ResponseDto<TeacherResponseDto> responseDto=new ResponseDto<>(HttpStatus.CREATED.value(),
+        ApiResponseDto<TeacherResponseDto> responseDto=new ApiResponseDto<>(HttpStatus.CREATED.value(),
                 "Subject assigned",newSubjectAssigned);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     @DeleteMapping("/{teacherId}/subjects/{subjectId}")
-    public ResponseEntity<ResponseDto<TeacherResponseDto>> removeSubject(@PathVariable UUID teacherId,@PathVariable UUID subjectId){
+    public ResponseEntity<ApiResponseDto<TeacherResponseDto>> removeSubject(@PathVariable UUID teacherId,@PathVariable UUID subjectId){
         TeacherResponseDto teacher= teacherService.removeSubject(teacherId,subjectId);
-        ResponseDto<TeacherResponseDto> responseDto= new ResponseDto<>(HttpStatus.OK.value(), "",teacher);
+        ApiResponseDto<TeacherResponseDto> responseDto= new ApiResponseDto<>(HttpStatus.OK.value(), "",teacher);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
     @GetMapping
-    public ResponseEntity<ResponseDto<List<TeacherResponseDto>>> getAllSubjects(){
+    public ResponseEntity<ApiResponseDto<List<TeacherResponseDto>>> getAllTeachers(){
         List<TeacherResponseDto> teachers=teacherService.getAllTeachers();
-        ResponseDto<List<TeacherResponseDto>> responseDto= new ResponseDto<>(HttpStatus.OK.value(),"Teachers found",teachers);
+        ApiResponseDto<List<TeacherResponseDto>> responseDto= new ApiResponseDto<>(HttpStatus.OK.value(),"Teachers found",teachers);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDto<TeacherResponseDto>> getTeacherById(@PathVariable UUID id){
+    public ResponseEntity<ApiResponseDto<TeacherResponseDto>> getTeacherById(@PathVariable UUID id){
         TeacherResponseDto teacher= teacherService.getTeacherById(id);
-        ResponseDto<TeacherResponseDto> responseDto=new ResponseDto<>(HttpStatus.OK.value(), "Teacher found",teacher);
+        ApiResponseDto<TeacherResponseDto> responseDto=new ApiResponseDto<>(HttpStatus.OK.value(), "Teacher found",teacher);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponseDto<TeacherResponseDto>> updateTeacher(@PathVariable UUID id,
+                                                                            @Valid @RequestBody  AddTeacherDto teacherDto){
+        TeacherResponseDto teacher=teacherService.updateTeacher(id,teacherDto);
+        ApiResponseDto<TeacherResponseDto> responseDto= new ApiResponseDto<>(HttpStatus.OK.value(),
+                "Teacher updated",teacher);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseDto<String>> deleteTeacher(@PathVariable UUID id){
+        String results=teacherService.deleteTeacher(id);
+        ApiResponseDto<String> responseDto= new ApiResponseDto<>(HttpStatus.OK.value(), "Teacher deleted",
+                results);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 }

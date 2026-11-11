@@ -2,7 +2,7 @@
 GET http://localhost:8080/subjects
 
 ###
-GET http://localhost:8080/subjects/c783fb73-f8f5-4c70-8f2e-b4b2f6ee9614
+GET http://localhost:8080/subjects/727d9725-2a82-4655-993f-a694c69a17bd
 
 ###
 
@@ -10,9 +10,22 @@ POST http://localhost:8080/subjects
 Content-Type: application/json
 
 {
-  "subjectName": "Kiswahili",
-  "subjectCode": "KSW101"
+  "subjectName": "Kiswahili3",
+  "subjectCode": "KSWl101"
 }
+
+###
+
+PUT http://localhost:8080/subjects/83da9c70-89f2-4cb7-b901-83672f054dc2
+Content-Type: application/json
+
+{
+  "subjectName": "Chemistry",
+  "subjectCode": "CHM101"
+}
+
+###
+DELETE http://localhost:8080/subjects/14a06c57-46d5-4f72-8318-5cfd9cf7f8ec
 
 ###
 
