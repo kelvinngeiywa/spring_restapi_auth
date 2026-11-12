@@ -78,4 +78,12 @@ public class User implements UserDetails {
     public void setRole(Role role){
         this.role=role;
     }
+
+    public Teacher getTeacher(){
+        return this.teacher;
+    }
+
+    public void setTeacher(Teacher teacher){
+        this.teacher=teacher;
+    }
 }

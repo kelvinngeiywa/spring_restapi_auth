@@ -1,5 +1,9 @@
 ### GET request to example server
 GET http://localhost:8080/subjects
+Authorization: Basic super.admin@gmail.com Superadmin@123
+
+###
+GET http://localhost:8080/subjects
 
 ###
 GET http://localhost:8080/subjects/727d9725-2a82-4655-993f-a694c69a17bd
@@ -28,6 +32,4 @@ Content-Type: application/json
 DELETE http://localhost:8080/subjects/14a06c57-46d5-4f72-8318-5cfd9cf7f8ec
 
 ###
-
-
 DELETE http://localhost:8080/teachers/3b2a246b-5fe3-4f85-bdbc-5c83cb45f91d/subjects/08f818a2-dbde-4ce8-bff

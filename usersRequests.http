@@ -1,0 +1,14 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+###
+
+POST http://localhost:8080/users/create-user
+Authorization: Basic super.admin@gmail.com Superadmin@123
+Content-Type: application/json
+
+{
+  "accountType": "Teacher",
+  "email": "sheila@gmail.com"
+}
