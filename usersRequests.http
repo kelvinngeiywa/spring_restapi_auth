@@ -3,6 +3,9 @@ GET https://examples.http-client.intellij.net/get
     ?generated-in=IntelliJ IDEA
 
 ###
+GET http://localhost:8080/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGVpbGFAZ21haWwuY29tIiwianRpIjoiW10iLCJpYXQiOjE3OTQ4MTk3MDMsImV4cCI6MTc5NDgyMzMwM30.a1yBr0fKqP2PntYlh0omyyOocNbphPnp4MGByKYAqGQ
+###
 
 POST http://localhost:8080/users/create-user
 Authorization: Basic super.admin@gmail.com Superadmin@123

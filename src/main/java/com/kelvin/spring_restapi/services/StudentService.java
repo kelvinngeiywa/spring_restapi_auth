@@ -100,7 +100,7 @@ public class StudentService {
     private StudentResponseDto toStudentResponse(Student student){
         return new StudentResponseDto(
                 student.getId(),student.getName(),student.getRegNumber(),student.getGrade(),
-                student.getStream(),student.getDob(),student.getResidence()
+                student.getStream().toString(),student.getDob(),student.getResidence()
         );
     }
 

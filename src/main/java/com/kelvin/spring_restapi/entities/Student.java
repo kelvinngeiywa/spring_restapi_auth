@@ -22,6 +22,7 @@ public class Student {
     private String regNumber;
     @Column(nullable = false)
     private int grade;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private GradeStreamEnum stream;
     @NotNull(message="DOB is required")

@@ -1,5 +1,6 @@
 ### GET request to example server
 GET http://localhost:8080/students
+Authorization: Basic super.admin@gmail.com Superadmin@123
 
 ###
 GET http://localhost:8080/students/a24870ad-b8a8-4cef-a298-584fb46294a8
@@ -7,13 +8,14 @@ GET http://localhost:8080/students/a24870ad-b8a8-4cef-a298-584fb46294a8
 ###
 
 POST http://localhost:8080/students
+Authorization: Basic super.admin@gmail.com Superadmin@123
 Content-Type: application/json
 
 {
-  "name": "Liam",
+  "name": "Liam One",
   "grade": 6,
   "stream": "Buffalo",
-  "regNumber": "2026/009/2BL",
+  "regNumber": "2026/010/2BL",
   "dob": "2018-08-15",
   "residence": "Kitale",
   "parentId": "e6f75f3f-c835-4a83-8e76-cce96c335b93"

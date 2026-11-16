@@ -86,4 +86,12 @@ public class User implements UserDetails {
     public void setTeacher(Teacher teacher){
         this.teacher=teacher;
     }
+
+    public Parent getParent(){
+        return this.parent;
+    }
+
+    public void setParent(Parent parent){
+        this.parent=parent;
+    }
 }

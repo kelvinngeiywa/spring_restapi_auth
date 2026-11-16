@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record StudentResponseDto(
-        UUID id, String name, String regNumber, int grade, GradeStreamEnum stream, LocalDate dob,
+        UUID id, String name, String regNumber, int grade, String stream, LocalDate dob,
         String residence
         ) {
 }
