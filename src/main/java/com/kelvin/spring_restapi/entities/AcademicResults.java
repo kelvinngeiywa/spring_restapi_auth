@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ public class AcademicResults {
     @JoinColumn(name = "recorded_by")
     private Teacher teacher;
     @Column(nullable = false)
-    private Year academicYear;
+    private int academicYear;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false,length = 15)
     private TermEnum term;
@@ -48,7 +49,7 @@ public class AcademicResults {
     public AcademicResults(){
 
     }
-    public AcademicResults(UUID id,Student student,Subject subject,Teacher teacher,Year academicYear,
+    public AcademicResults(UUID id,Student student,Subject subject,Teacher teacher,int academicYear,
                            TermEnum term,ExamTypeEnum examType,double score,double maxScore,String remarks,
                            Instant createdAt, Instant updatedAt)
     {
@@ -94,11 +95,11 @@ public class AcademicResults {
         this.teacher=teacher;
     }
 
-    public void setAcademicYear(Year academicYear){
+    public void setAcademicYear(int academicYear){
         this.academicYear=academicYear;
     }
 
-    public Year getAcademicYear(){
+    public int getAcademicYear(){
         return this.academicYear;
     }
 

@@ -1,12 +1,16 @@
 package com.kelvin.spring_restapi;
 
 import com.kelvin.spring_restapi.customExceptions.DuplicateEntryException;
+import com.kelvin.spring_restapi.entities.dtos.ApiResponseDto;
 import com.kelvin.spring_restapi.entities.dtos.ResponseDto;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -48,11 +52,31 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.BAD_REQUEST, errorMessage);
     }
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Map<String, Object>> handleAuthentication(AuthenticationException ex) {
+        return build(HttpStatus.UNAUTHORIZED, "Invalid email or password");
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, Object>> handleDenied(AccessDeniedException ex) {
+        return build(HttpStatus.FORBIDDEN, "You do not have permission to access this resource");
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseDto<Object>> handleAll(Exception ex) {
         log.error("Unhandled exception", ex);
         return ResponseEntity.status(500)
                 .body(new ResponseDto<>(500, "Internal server error", null));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponseDto<Void>> handleDataIntegrity(DataIntegrityViolationException ex) {
+        ApiResponseDto<Void> body = new ApiResponseDto<>(
+                HttpStatus.CONFLICT.value(),
+                "A record with the same details already exists",
+                null
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
 
 

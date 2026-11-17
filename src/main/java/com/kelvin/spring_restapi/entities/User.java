@@ -1,6 +1,7 @@
 package com.kelvin.spring_restapi.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.engine.internal.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +24,8 @@ public class User implements UserDetails {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId",unique = true)
     private Parent parent;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "roleId",referencedColumnName = "id",nullable = false)
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "role_id",referencedColumnName = "id",nullable = false)
     private Role role;
 
     public User(){
@@ -43,8 +44,8 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
-//        SimpleGrantedAuthority authority=new SimpleGrantedAuthority("ROLE_"+ role.getName().toString());
-        return List.of();
+        SimpleGrantedAuthority authority=new SimpleGrantedAuthority("ROLE_"+ role.getName().toString());
+        return List.of(authority);
     }
     @Override
     public String getUsername(){

@@ -6,17 +6,19 @@ import com.kelvin.spring_restapi.entities.Teacher;
 import com.kelvin.spring_restapi.entities.enums.ExamTypeEnum;
 import com.kelvin.spring_restapi.entities.enums.TermEnum;
 
+import java.time.LocalDate;
 import java.time.Year;
+import java.util.UUID;
 
 public record AcademicResultsResponseDto(
-        Student student,
-        Subject subject,
+        String regNumber,
+        String subjectCode,
         double max,
         double maxScore,
         TermEnum term,
         ExamTypeEnum examType,
-        Year academicYear,
-        Teacher teacher,
+        int academicYear,
+        UUID teacherId,
         String remarks
 ) {
 }

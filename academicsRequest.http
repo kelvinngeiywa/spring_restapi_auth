@@ -1,0 +1,34 @@
+### GET request to example server
+GET http://localhost:8080/academic-results
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGVpbGFAZ21haWwuY29tIiwianRpIjoiW1JPTEVfVEVBQ0hFUl0iLCJpYXQiOjE3OTQ5MDc4NTYsImV4cCI6MTc5NDkxMTQ1Nn0.fKbiBIOWj0DteMSVSd83_92oodma-f0jwGvL34PNCyY
+
+###
+
+POST http://localhost:8080/academic-results
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGVpbGFAZ21haWwuY29tIiwianRpIjoiW1JPTEVfVEVBQ0hFUl0iLCJpYXQiOjE3OTQ5MDc4NTYsImV4cCI6MTc5NDkxMTQ1Nn0.fKbiBIOWj0DteMSVSd83_92oodma-f0jwGvL34PNCyY
+Content-Type: application/json
+
+{
+  "regNumber": "2026/001E",
+  "subjectCode": "MATH101",
+  "score":0,
+  "maxScore": 0,
+  "examType": "MID_TERM",
+  "term": "TERM_1",
+  "academicYear": "2026-11-02",
+
+  "teacherId": "34bae4ae-fff1-44f5-8b7d-d6efaf801805",
+  "remarks": ""
+
+
+}
+###
+PUT http://localhost:8080/academic-results/c8ec2ffc-10af-48dc-833a-6b3e9586350f
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGVpbGFAZ21haWwuY29tIiwianRpIjoiW1JPTEVfVEVBQ0hFUl0iLCJpYXQiOjE3OTQ5MDc4NTYsImV4cCI6MTc5NDkxMTQ1Nn0.fKbiBIOWj0DteMSVSd83_92oodma-f0jwGvL34PNCyY
+Content-Type: application/json
+
+{
+  "score": 67,
+  "maxScore": 100
+
+}
