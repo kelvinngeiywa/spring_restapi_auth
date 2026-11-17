@@ -6,12 +6,15 @@ import com.kelvin.spring_restapi.entities.dtos.RegisterUserDto;
 import com.kelvin.spring_restapi.entities.enums.RoleEnum;
 import com.kelvin.spring_restapi.repository.RoleRepository;
 import com.kelvin.spring_restapi.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class SuperAdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
@@ -34,18 +37,22 @@ public class SuperAdminSeeder implements ApplicationListener<ContextRefreshedEve
     private void createSuperAdmin(){
         RegisterUserDto registerUser= new RegisterUserDto("super.admin@gmail.com","Superadmin@123");
 
-        Optional<Role> role= roleRepository.findRoleByName(RoleEnum.SUPER_ADMIN);
+        Role role= roleRepository.findRoleByName(RoleEnum.SUPER_ADMIN).orElseThrow(
+                ()-> new EntityNotFoundException("Super admin role not found!!")
+        );
 
         Optional<User> user= userRepository.findUserByEmail(registerUser.email());
 
-        if(role.isEmpty() || user.isPresent()){
+        if(user.isPresent()){
             return;
         }
+
+
 
         var userDto=new User();
         userDto.setEmail(registerUser.email());
         userDto.setPassword(passwordEncoder.encode(registerUser.password()));
-        userDto.setRole(role.get());
+        userDto.setRole(new HashSet<>(Set.of(role)));
 
         userRepository.save(userDto);
 

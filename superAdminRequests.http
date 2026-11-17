@@ -1,0 +1,21 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+###
+POST http://localhost:8080/super-admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlci5hZG1pbkBnbWFpbC5jb20iLCJqdGkiOiJbUk9MRV9TVVBFUl9BRE1JTl0iLCJpYXQiOjE3OTQ5MjA2MDEsImV4cCI6MTc5NDkyNDIwMX0.ZCJpoGoqmrpC6GMTRw2GZBHMKoZktg7GwvnKjiYtJh4
+Content-Type: application/json
+
+{
+  "email": "admin1@gmail.com",
+  "password": "Admin"
+}
+
+###
+PUT http://localhost:8080/super-admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlci5hZG1pbkBnbWFpbC5jb20iLCJqdGkiOiJbUk9MRV9TVVBFUl9BRE1JTl0iLCJpYXQiOjE3OTQ5MjA2MDEsImV4cCI6MTc5NDkyNDIwMX0.ZCJpoGoqmrpC6GMTRw2GZBHMKoZktg7GwvnKjiYtJh4
+Content-Type: application/json
+
+{
+  "email": "alex@gmail.com"
+}

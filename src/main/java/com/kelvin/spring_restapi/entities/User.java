@@ -6,9 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -24,28 +23,33 @@ public class User implements UserDetails {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId",unique = true)
     private Parent parent;
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "role_id",referencedColumnName = "id",nullable = false)
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public User(){
 
     }
 
-    public User(UUID id,String email,String password,Parent parent,Teacher teacher,Role role){
+    public User(UUID id,String email,String password,Parent parent,Teacher teacher,Set<Role> roles){
         this.id=id;
         this.email=email;
         this.password=password;
         this.parent=parent;
         this.teacher=teacher;
-        this.role=role;
+        this.roles=roles;
 
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
-        SimpleGrantedAuthority authority=new SimpleGrantedAuthority("ROLE_"+ role.getName().toString());
-        return List.of(authority);
+//        SimpleGrantedAuthority authority=new SimpleGrantedAuthority("ROLE_"+ role.getName().toString());
+
+        return roles.stream().map(r-> new SimpleGrantedAuthority("ROLE_" + r.getName())).toList();
     }
     @Override
     public String getUsername(){
@@ -72,12 +76,12 @@ public class User implements UserDetails {
         this.password=password;
     }
 
-    public Role getRole(){
-        return this.role;
+    public Set<Role> getRole(){
+        return this.roles;
     }
 
-    public void setRole(Role role){
-        this.role=role;
+    public void setRole(Set<Role> role){
+        this.roles=role;
     }
 
     public Teacher getTeacher(){
@@ -94,5 +98,11 @@ public class User implements UserDetails {
 
     public void setParent(Parent parent){
         this.parent=parent;
+    }
+
+    public Set<String> getRoleName(){
+        return this.roles.stream().map(
+                role -> role.getName().name()
+        ).collect(Collectors.toSet());
     }
 }

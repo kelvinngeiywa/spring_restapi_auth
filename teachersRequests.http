@@ -1,5 +1,6 @@
 ### GET request to example server
 GET http://localhost:8080/teachers
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGVpbGFAZ21haWwuY29tIiwianRpIjoiW1JPTEVfVEVBQ0hFUl0iLCJpYXQiOjE3OTQ5MTM0MTcsImV4cCI6MTc5NDkxNzAxN30.x6NXU4NUfpZe2TI4R4Il0i1ALUEwFoZJLH78sU3kHdg
 
 ###
 GET http://localhost:8080/teachers/bcb288dd-b8e4-4089-ad6b-860667d6a900

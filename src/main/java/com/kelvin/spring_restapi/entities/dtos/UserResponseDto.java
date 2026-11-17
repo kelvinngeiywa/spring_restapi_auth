@@ -2,7 +2,8 @@ package com.kelvin.spring_restapi.entities.dtos;
 
 import com.kelvin.spring_restapi.entities.Role;
 
+import java.util.Set;
 import java.util.UUID;
 
-public record UserResponseDto(UUID id, String email, String role) {
+public record UserResponseDto(UUID id, String email, Set<String> role) {
 }

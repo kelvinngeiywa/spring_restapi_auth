@@ -3,6 +3,7 @@ package com.kelvin.spring_restapi;
 import com.kelvin.spring_restapi.customExceptions.DuplicateEntryException;
 import com.kelvin.spring_restapi.entities.dtos.ApiResponseDto;
 import com.kelvin.spring_restapi.entities.dtos.ResponseDto;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +78,13 @@ public class GlobalExceptionHandler {
                 null
         );
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ApiResponseDto<Void>> handleExpiredJwt(ExpiredJwtException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ApiResponseDto<>(HttpStatus.UNAUTHORIZED.value(),
+                        "Token has expired, please log in again", null));
     }
 
 

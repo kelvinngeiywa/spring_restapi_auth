@@ -9,17 +9,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGVpbGFAZ21haWwuY29tIiwia
 Content-Type: application/json
 
 {
-  "regNumber": "2026/001E",
-  "subjectCode": "MATH101",
-  "score":0,
-  "maxScore": 0,
-  "examType": "MID_TERM",
+  "regNumber": "2026/002/2LI",
+  "subjectCode": "CS101",
+  "score":65,
+  "maxScore": 100,
+  "examType": "OPENER",
   "term": "TERM_1",
-  "academicYear": "2026-11-02",
-
-  "teacherId": "34bae4ae-fff1-44f5-8b7d-d6efaf801805",
+  "academicYear": "2026-01-08",
+  "teacherId": "3b2a246b-5fe3-4f85-bdbc-5c83cb45f91d",
   "remarks": ""
-
 
 }
 ###

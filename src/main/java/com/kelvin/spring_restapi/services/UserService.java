@@ -5,6 +5,7 @@ import com.kelvin.spring_restapi.entities.Parent;
 import com.kelvin.spring_restapi.entities.Role;
 import com.kelvin.spring_restapi.entities.Teacher;
 import com.kelvin.spring_restapi.entities.User;
+import com.kelvin.spring_restapi.entities.dtos.AssignAdminDto;
 import com.kelvin.spring_restapi.entities.dtos.CreateCredentialsDto;
 import com.kelvin.spring_restapi.entities.dtos.UserResponseDto;
 import com.kelvin.spring_restapi.entities.enums.RoleEnum;
@@ -13,8 +14,10 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -51,12 +54,14 @@ public class UserService {
                     throw new DuplicateEntryException("User account for teacher exists!!");
                 }
 
-                Optional<Role> optionalRole= roleRepository.findRoleByName(RoleEnum.TEACHER);
+                Role optionalRole= roleRepository.findRoleByName(RoleEnum.TEACHER).orElseThrow(
+                        ()-> new EntityNotFoundException("Role not found!!")
+                );
 
                 newUser.setEmail(credentialsDto.email());
                 newUser.setPassword(passwordEncoder.encode("Teacher1@123"));
                 newUser.setTeacher(teacher);
-                newUser.setRole(optionalRole.get());
+                newUser.setRole(new HashSet<>(Set.of(optionalRole)));
 
                 userRepository.save(newUser);
                 yield "Teacher's account creation";
@@ -75,21 +80,59 @@ public class UserService {
                 }
 
 
-                Optional<Role> parentRole= roleRepository.findRoleByName(RoleEnum.PARENT);
+                Role parentRole= roleRepository.findRoleByName(RoleEnum.PARENT).orElseThrow(
+                        ()->new EntityNotFoundException("Parent role not found!!")
+                );
                 newUser.setEmail(credentialsDto.email());
                 newUser.setPassword(passwordEncoder.encode("Parent1@123"));
                 newUser.setParent(parent);
-                newUser.setRole(parentRole.get());
+                newUser.setRole(new HashSet<>(Set.of(parentRole)));
 
                 userRepository.save(newUser);
                 yield "Parent created!!";
             }
+
+            case STAFF -> {
+                yield "Staff created";
+            }
         };
+    }
+
+    public UserResponseDto createAdmin(CreateCredentialsDto createAdmin){
+        Role optionalRole=roleRepository.findRoleByName(RoleEnum.ADMIN).orElseThrow(
+                ()-> new EntityNotFoundException("Admin role not found!!")
+        );
+
+        var user= new User();
+        user.setEmail(createAdmin.email());
+        user.setPassword(passwordEncoder.encode(createAdmin.password()));
+        user.setRole(new HashSet<>(Set.of(optionalRole)));
+
+        userRepository.save(user);
+        return toUserResponseDto(user);
+
+    }
+
+    public UserResponseDto assignAdminRole(AssignAdminDto assignAdminDto){
+        Role optionalRole=roleRepository.findRoleByName(RoleEnum.ADMIN).orElseThrow(
+                ()-> new EntityNotFoundException("Admin role not found")
+        );
+
+        User user= userRepository.findUserByEmail(assignAdminDto.email()).orElseThrow(
+                ()-> new EntityNotFoundException("User not found")
+        );
+//        var user= new User();
+        user.setRole(new HashSet<>(Set.of(optionalRole)));
+        user.setPassword(passwordEncoder.encode("Admin1@123"));
+
+        userRepository.save(user);
+        return toUserResponseDto(user);
+
     }
 
     private UserResponseDto toUserResponseDto(User user){
         return new UserResponseDto(
-                user.getId(),user.getEmail(),user.getRole().getName().toString()
+                user.getId(),user.getEmail(),user.getRoleName()
         );
     }
 }

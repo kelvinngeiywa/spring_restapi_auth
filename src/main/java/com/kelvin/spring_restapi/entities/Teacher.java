@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "teachers")
@@ -113,5 +114,11 @@ public class Teacher {
 
     public Set<Subject> getSubjects(){
         return this.subjects;
+    }
+
+    public Set<String> getSubjectsName(){
+        return this.subjects.stream().map(
+                Subject::getSubjectName
+        ).collect(Collectors.toSet());
     }
 }

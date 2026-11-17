@@ -36,6 +36,7 @@ public class SecurityConfigs {
                 .csrf(c->c.disable())
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/auth/login","/error").permitAll()
+                        .requestMatchers("/super-admin").hasRole("SUPER_ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(ex->ex

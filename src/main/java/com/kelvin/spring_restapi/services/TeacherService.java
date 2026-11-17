@@ -129,10 +129,7 @@ public class TeacherService {
     private TeacherResponseDto toTeacherResponse(Teacher teacher){
         return new TeacherResponseDto(
                 teacher.getId(),teacher.getName(),teacher.getEmail(),teacher.getResidence(),teacher.getDob(),teacher.getResidence(),
-                teacher.getSubjects().stream().map(
-                        subject-> new SubjectResponseDto(
-                                subject.getId(),subject.getSubjectName(),subject.getSubjectCode()))
-                        .collect(Collectors.toSet())
+                teacher.getSubjectsName()
         );
 
     }

@@ -5,5 +5,5 @@ import java.util.Set;
 import java.util.UUID;
 
 public record TeacherResponseDto(UUID id, String name, String email, String phoneNumber,
-                                 LocalDate dob,String residence, Set<SubjectResponseDto> subjects) {
+                                 LocalDate dob,String residence, Set<String> subjects) {
 }
